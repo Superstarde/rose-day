@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Rose Day ❤️</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{font-family:'Poppins',sans-serif}
+.font-love{font-family:'Great Vibes',cursive}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes confettiFall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+
+.glass{
+backdrop-filter:blur(18px);
+background:rgba(255,255,255,.18);
+border:1px solid rgba(255,255,255,.35)
+}
+
+.heart{
+position:absolute;
+font-size:22px;
+animation:float 6s ease-in-out infinite;
+opacity:.9
+}
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+animation:confettiFall 5s linear forwards
+}
+</style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-pink-200 via-pink-100 to-purple-200 overflow-hidden relative">
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FLOATING HEARTS -->
+<div class="heart" style="top:10%;left:15%">💗</div>
+<div class="heart" style="top:30%;right:20%">💕</div>
+<div class="heart" style="bottom:25%;left:10%">💖</div>
+<div class="heart" style="bottom:15%;right:25%">💞</div>
+
+<div class="flex items-center justify-center min-h-screen p-6">
+
+<!-- SLIDE 1 -->
+<div id="s1" class="glass rounded-3xl p-10 text-center animate-[fadeUp_1s_ease]">
+<h1 class="font-love text-5xl text-white mb-4">Hey My Love 🌹</h1>
+<p class="text-white text-lg">I have a surprise for you…</p>
+<button onclick="next(1)"
+class="mt-8 px-10 py-3 rounded-full bg-pink-500 text-white font-semibold shadow-lg hover:scale-105 transition">
+Tap to unlock 💝
+</button>
+</div>
+
+<!-- SLIDE 2 -->
+<div id="s2" class="hidden glass rounded-3xl p-10 text-center animate-[fadeUp_1s_ease]">
+<img src="rose.png" class="w-44 mx-auto mb-6 animate-[float_4s_infinite]">
+<h1 class="font-love text-4xl text-white">This Rose is for You</h1>
+<p class="text-white mt-4">Because you make my world bloom 🌸</p>
+<button onclick="next(2)"
+class="mt-8 px-10 py-3 rounded-full bg-pink-500 text-white font-semibold shadow-lg">
+Next 💗
+</button>
+</div>
+
+<!-- SLIDE 3 -->
+<div id="s3" class="hidden glass rounded-3xl p-8 text-center animate-[fadeUp_1s_ease]">
+<h1 class="font-love text-4xl text-white mb-6">My Favorite View ❤️</h1>
+<div class="grid grid-cols-2 gap-4">
+<img src="img1.jpg" class="rounded-xl shadow-lg">
+<img src="img2.jpg" class="rounded-xl shadow-lg">
+<img src="img3.jpg" class="rounded-xl shadow-lg">
+<img src="img4.jpg" class="rounded-xl shadow-lg">
+</div>
+<button onclick="next(3)"
+class="mt-6 px-10 py-3 rounded-full bg-pink-500 text-white font-semibold shadow-lg">
+Next 💌
+</button>
+</div>
+
+<!-- SLIDE 4 -->
+<div id="s4" class="hidden glass rounded-3xl p-10 text-center animate-[fadeUp_1s_ease] max-w-xl">
+<h1 class="font-love text-5xl text-white mb-6">Happy Rose Day 🌹</h1>
+<p id="letter" class="text-white text-lg leading-relaxed"></p>
+</div>
+
+</div>
+
+<script>
+const music=document.getElementById("bgMusic");
+
+function next(n){
+document.getElementById("s"+n).classList.add("hidden");
+document.getElementById("s"+(n+1)).classList.remove("hidden");
+music.play().catch(()=>{});
+if(n===3){startTypewriter();startConfetti();}
+}
+
+/* TYPEWRITER LOVE LETTER */
+const text=`My love,
+
+Just like a rose, you bring beauty,
+warmth, and meaning into my life.
+Every heartbeat carries your name,
+every dream has your smile in it.
+
+Thank you for being my today,
+my tomorrow, and my forever 💖`;
+
+let i=0;
+function startTypewriter(){
+const el=document.getElementById("letter");
+const interval=setInterval(()=>{
+el.innerHTML+=text.charAt(i);
+i++;
+if(i>=text.length) clearInterval(interval);
+},40);
+}
+
+/* CONFETTI */
+function startConfetti(){
+for(let i=0;i<80;i++){
+const c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"vw";
+c.style.backgroundColor=["#ff69b4","#ff1493","#fff","#ffd1dc"][Math.floor(Math.random()*4)];
+c.style.top="-10px";
+c.style.animationDuration=3+Math.random()*3+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),6000);
+}
+}
+</script>
+
+</body>
+</html>
