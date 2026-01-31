@@ -12,15 +12,11 @@
     body { font-family: 'Quicksand', sans-serif; }
     .font-hand { font-family: 'Dancing Script', cursive; }
 
-    /* Background gradient animation with floating hearts */
+    /* Background gradient animation */
     @keyframes gradientBG {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
-    }
-    @keyframes heartFloat {
-        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(-600px) rotate(360deg); opacity: 0; }
     }
 
     body {
@@ -31,6 +27,11 @@
         position: relative;
     }
 
+    /* Floating hearts in background */
+    @keyframes heartFloat {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-600px) rotate(360deg); opacity: 0; }
+    }
     .heart {
         position: absolute;
         width: 20px; height: 20px;
@@ -106,6 +107,7 @@
         border: 1px solid #e8c8d8;
         box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
         transition: height 2s ease-in-out;
+        position: relative;
     }
     .scroll-content {
         padding: 25px;
@@ -123,6 +125,18 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .unrolled { height: 380px; }
+
+    /* Letter Confetti Hearts */
+    .love-particle {
+        position: absolute;
+        font-size: 20px;
+        animation: floatUp 3s ease forwards;
+        opacity: 0;
+    }
+    @keyframes floatUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
+    }
 
     /* Animations */
     @keyframes fadeIn { from {opacity:0} to {opacity:1} }
@@ -200,6 +214,9 @@
             I cherish every memory, every hug, every kiss, and every tiny moment we share. You are my sunshine, my safe haven, and my forever. 
             <br><br>
             Thank you for being uniquely, beautifully you. I love you today, tomorrow, and always! ❤️💖💋
+            <br><br>
+            Forever yours,<br>
+            💌💋❤️
         </div>
     </div>
     <div class="scroll-roll" style="margin-top:-5px; margin-bottom:20px;"></div>
@@ -215,16 +232,20 @@
 <script>
 const music = document.getElementById("bgMusic");
 
-// Show slides
 function goToSlide(slideNumber) {
     if(slideNumber === 2) music.play().catch(e=>console.log("User interaction needed"));
     [1,2,3,4].forEach(n => document.getElementById('slide'+n).classList.add('hidden-slide'));
     document.getElementById('slide'+slideNumber).classList.remove('hidden-slide');
 
-    if(slideNumber === 4) setTimeout(()=>document.getElementById('letterScroll').classList.add('unrolled'), 100);
-    else document.getElementById('letterScroll').classList.remove('unrolled');
+    if(slideNumber === 4){
+        setTimeout(()=>{
+            document.getElementById('letterScroll').classList.add('unrolled');
+            createLoveParticles();
+        }, 100);
+    } else {
+        document.getElementById('letterScroll').classList.remove('unrolled');
+    }
 
-    // Animate photos when entering slide 3
     if(slideNumber === 3){
         const thumbs = document.querySelectorAll('.photo-thumb');
         thumbs.forEach((thumb,i)=>{
@@ -238,6 +259,20 @@ function goToSlide(slideNumber) {
 // Lightbox
 function openZoom(src){ document.getElementById('lightbox-img').src=src; document.getElementById('lightbox').style.display="flex"; }
 function closeZoom(){ document.getElementById('lightbox').style.display="none"; }
+
+// Love Particles for Slide 4
+function createLoveParticles(){
+    for(let i=0;i<30;i++){
+        let p = document.createElement('div');
+        p.className='love-particle';
+        p.innerText = Math.random()>0.5?'💖':'💋';
+        p.style.left = Math.random()*90+'%';
+        p.style.fontSize = 15 + Math.random()*20 + 'px';
+        document.getElementById('letterScroll').appendChild(p);
+        setTimeout(()=>p.remove(),3000);
+    }
+    setTimeout(createLoveParticles, 500); // repeat every 0.5s while slide 4 is open
+}
 </script>
 
 </body>
