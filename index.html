@@ -3,16 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Memories for Amna 💖</title>
+<title>For Amna 💖</title>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* 🌸 Floating Hearts */
+/* ===== GLOBAL ===== */
+body { overflow: hidden; }
+
+/* ===== FLOATING HEARTS ===== */
 @keyframes floatUp {
   0% { transform: translateY(0) scale(1); opacity: 1; }
   100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
 }
-.heart-float {
+.heart {
   position: absolute;
   bottom: -20px;
   width: 18px;
@@ -21,156 +24,162 @@
   transform: rotate(-45deg);
   animation: floatUp linear infinite;
 }
-.heart-float::before,
-.heart-float::after {
-  content: '';
+.heart::before,.heart::after{
+  content:'';
+  position:absolute;
+  width:18px;height:18px;
+  background:pink;border-radius:50%;
+}
+.heart::before{top:-9px}
+.heart::after{left:9px}
+
+/* ===== SLIDES ===== */
+.slide {
   position: absolute;
-  width: 18px;
-  height: 18px;
-  background: pink;
-  border-radius: 50%;
+  inset: 0;
+  display: none;
 }
-.heart-float::before { top: -9px; left: 0; }
-.heart-float::after { left: 9px; top: 0; }
-
-/* 💓 Tap Heart Pop */
-.tap-heart {
-  position: fixed;
-  width: 22px;
-  height: 22px;
-  background: hotpink;
-  transform: rotate(-45deg);
-  animation: pop 0.8s ease forwards;
-  z-index: 9999;
-}
-.tap-heart::before,
-.tap-heart::after {
-  content: '';
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  background: hotpink;
-  border-radius: 50%;
-}
-.tap-heart::before { top: -11px; left: 0; }
-.tap-heart::after { left: 11px; top: 0; }
-
-@keyframes pop {
-  0% { transform: scale(0.5) rotate(-45deg); opacity: 1; }
-  100% { transform: scale(2) translateY(-30px) rotate(-45deg); opacity: 0; }
+.slide.active {
+  display: flex;
 }
 
-/* 📸 Shake Reveal */
-.reveal {
-  filter: blur(12px);
-}
-.reveal.active {
-  filter: blur(0);
-  animation: shake 0.5s ease;
-}
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
-}
-
-/* 🧲 Horizontal Swipe */
+/* ===== PHOTO SLIDER ===== */
 .slider {
   display: flex;
+  gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 16px;
-  padding: 16px;
 }
 .slider::-webkit-scrollbar { display: none; }
-.slide {
+.photo {
   min-width: 260px;
   height: 360px;
   scroll-snap-align: center;
   border-radius: 20px;
   overflow: hidden;
-  background: #fff;
-  box-shadow: 0 10px 25px rgba(255,105,180,.3);
+  background: white;
+  box-shadow: 0 10px 25px rgba(255,105,180,.35);
 }
-.slide img {
+.photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(14px);
+}
+.photo img.revealed {
+  filter: blur(0);
+  animation: shake .5s;
+}
+@keyframes shake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
+  100%{transform:translateX(0)}
 }
 
-/* 🔘 Fixed Next Button */
-.next-btn {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  background: linear-gradient(135deg,#ff69b4,#ff1493);
-  color: white;
-  padding: 12px 18px;
-  border-radius: 999px;
-  font-weight: bold;
-  z-index: 100;
+/* ===== TAP HEART ===== */
+.tap-heart{
+  position:fixed;
+  width:22px;height:22px;
+  background:hotpink;
+  transform:rotate(-45deg);
+  animation:pop .8s forwards;
+  z-index:999;
+}
+.tap-heart::before,.tap-heart::after{
+  content:'';
+  position:absolute;
+  width:22px;height:22px;
+  background:hotpink;border-radius:50%;
+}
+.tap-heart::before{top:-11px}
+.tap-heart::after{left:11px}
+@keyframes pop{
+  0%{opacity:1;transform:scale(.6) rotate(-45deg)}
+  100%{opacity:0;transform:scale(2) translateY(-30px) rotate(-45deg)}
+}
+
+/* ===== NEXT BUTTON ===== */
+.next-btn{
+  position:fixed;
+  bottom:16px;
+  right:16px;
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ff69b4,#ff1493);
+  color:white;
+  font-weight:bold;
+  z-index:100;
 }
 </style>
 </head>
 
-<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 min-h-screen overflow-hidden">
+<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
 
-<!-- 🎵 Music -->
+<!-- MUSIC -->
 <audio id="bgMusic" loop>
-  <source src="Dev.mp3" type="audio/mpeg">
+  <source src="Dev.mp3">
 </audio>
 
-<!-- 💖 Floating Hearts -->
-<div id="floatingHearts"></div>
+<!-- FLOATING HEARTS -->
+<div id="hearts"></div>
 
-<!-- 🌸 Content -->
-<div class="flex flex-col items-center justify-center min-h-screen text-center px-4">
-  <h1 class="text-4xl font-bold text-pink-600 mb-2">For Amna 💕</h1>
-  <p class="text-gray-600 mb-4">Swipe right → left & tap photos</p>
-
-  <!-- 📸 Slider -->
-  <div class="slider">
-    <div class="slide"><img src="pic1.jpg" class="reveal"></div>
-    <div class="slide"><img src="pic2.jpg" class="reveal"></div>
-    <div class="slide"><img src="pic3.jpg" class="reveal"></div>
-    <div class="slide"><img src="pic4.jpg" class="reveal"></div>
+<!-- SLIDE 1 : INTRO -->
+<div id="slide1" class="slide active items-center justify-center flex-col text-center px-6">
+  <h1 class="text-4xl font-bold text-pink-600 mb-4">For Amna 💕</h1>
+  <div onclick="goToPhotos()" class="bg-white/60 backdrop-blur-xl p-10 rounded-3xl shadow-xl cursor-pointer">
+    <p class="text-lg font-semibold">Tap to unlock memories 💖</p>
   </div>
 </div>
 
-<!-- ➡️ Next -->
-<button class="next-btn">Next Page ➡️</button>
+<!-- SLIDE 2 : PHOTOS -->
+<div id="slide2" class="slide items-center justify-center flex-col px-4">
+  <p class="mb-4 text-gray-600">Swipe → and tap photos</p>
+  <div class="slider">
+    <div class="photo"><img src="pic1.jpg"></div>
+    <div class="photo"><img src="pic2.jpg"></div>
+    <div class="photo"><img src="pic3.jpg"></div>
+    <div class="photo"><img src="pic4.jpg"></div>
+  </div>
+</div>
+
+<!-- NEXT -->
+<button class="next-btn" onclick="location.href='cake.html'">Next ➡️</button>
 
 <script>
-/* 🎶 Auto music */
-document.body.addEventListener('click',()=>bgMusic.play(),{once:true});
+/* SLIDE SWITCH */
+function goToPhotos(){
+  document.getElementById('slide1').classList.remove('active');
+  document.getElementById('slide2').classList.add('active');
+  bgMusic.play().catch(()=>{});
+}
 
-/* 💕 Floating Hearts Generator */
+/* FLOATING HEARTS */
 setInterval(()=>{
   const h=document.createElement('div');
-  h.className='heart-float';
+  h.className='heart';
   h.style.left=Math.random()*100+'%';
   h.style.animationDuration=6+Math.random()*4+'s';
-  document.getElementById('floatingHearts').appendChild(h);
+  document.getElementById('hearts').appendChild(h);
   setTimeout(()=>h.remove(),10000);
-},800);
+},700);
 
-/* 💓 Heart Pop on Touch (except buttons) */
+/* TAP HEARTS */
 document.addEventListener('click',e=>{
   if(e.target.tagName==='BUTTON') return;
-  const heart=document.createElement('div');
-  heart.className='tap-heart';
-  heart.style.left=e.clientX+'px';
-  heart.style.top=e.clientY+'px';
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),800);
+  const h=document.createElement('div');
+  h.className='tap-heart';
+  h.style.left=e.clientX+'px';
+  h.style.top=e.clientY+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),800);
 });
 
-/* 📸 Shake Reveal */
-document.querySelectorAll('.reveal').forEach(img=>{
+/* SHAKE REVEAL */
+document.querySelectorAll('.photo img').forEach(img=>{
   img.addEventListener('click',()=>{
-    img.classList.add('active');
+    img.classList.add('revealed');
   });
 });
 </script>
