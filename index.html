@@ -3,185 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Amna 💖</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>For Amna ❤️</title>
 
 <style>
-/* ===== GLOBAL ===== */
-body { overflow: hidden; }
-
-/* ===== FLOATING HEARTS ===== */
-@keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
 }
-.heart {
-  position: absolute;
-  bottom: -20px;
-  width: 18px;
-  height: 18px;
-  background: pink;
-  transform: rotate(-45deg);
-  animation: floatUp linear infinite;
-}
-.heart::before,.heart::after{
-  content:'';
-  position:absolute;
-  width:18px;height:18px;
-  background:pink;border-radius:50%;
-}
-.heart::before{top:-9px}
-.heart::after{left:9px}
-
-/* ===== SLIDES ===== */
-.slide {
-  position: absolute;
-  inset: 0;
-  display: none;
-}
-.slide.active {
-  display: flex;
+body{
+    background:#fff0f5;
+    height:100vh;
+    overflow:hidden;
 }
 
-/* ===== PHOTO SLIDER ===== */
-.slider {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+/* SLIDE WRAPPER */
+.slide{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:transform 0.6s ease;
 }
-.slider::-webkit-scrollbar { display: none; }
-.photo {
-  min-width: 260px;
-  height: 360px;
-  scroll-snap-align: center;
-  border-radius: 20px;
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 10px 25px rgba(255,105,180,.35);
-}
-.photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(14px);
-}
-.photo img.revealed {
-  filter: blur(0);
-  animation: shake .5s;
-}
-@keyframes shake {
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-6px)}
-  50%{transform:translateX(6px)}
-  75%{transform:translateX(-6px)}
-  100%{transform:translateX(0)}
+.hidden{
+    transform:translateX(100%);
 }
 
-/* ===== TAP HEART ===== */
-.tap-heart{
-  position:fixed;
-  width:22px;height:22px;
-  background:hotpink;
-  transform:rotate(-45deg);
-  animation:pop .8s forwards;
-  z-index:999;
-}
-.tap-heart::before,.tap-heart::after{
-  content:'';
-  position:absolute;
-  width:22px;height:22px;
-  background:hotpink;border-radius:50%;
-}
-.tap-heart::before{top:-11px}
-.tap-heart::after{left:11px}
-@keyframes pop{
-  0%{opacity:1;transform:scale(.6) rotate(-45deg)}
-  100%{opacity:0;transform:scale(2) translateY(-30px) rotate(-45deg)}
+/* CARD */
+.card{
+    width:90%;
+    max-width:360px;
+    background:white;
+    border-radius:20px;
+    padding:24px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
 }
 
-/* ===== NEXT BUTTON ===== */
-.next-btn{
-  position:fixed;
-  bottom:16px;
-  right:16px;
-  padding:12px 18px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#ff69b4,#ff1493);
-  color:white;
-  font-weight:bold;
-  z-index:100;
+/* BUTTONS */
+.btn-row{
+    display:flex;
+    gap:12px;
+    margin-top:18px;
+}
+button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    font-weight:600;
+    cursor:pointer;
+}
+.next{
+    background:#ff4d6d;
+    color:white;
+}
+.back{
+    background:white;
+    border:2px solid #ff4d6d;
+    color:#ff4d6d;
+}
+
+/* PHOTO SLIDE */
+.photo-track{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding-bottom:10px;
+}
+.photo-track::-webkit-scrollbar{
+    display:none;
+}
+.photo{
+    min-width:220px;
+    height:280px;
+    border-radius:16px;
+    overflow:hidden;
+    position:relative;
+    scroll-snap-align:center;
+    background:#ddd;
+}
+
+/* hidden state */
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:blur(18px);
+    transform:scale(1.1);
+    transition:all 0.9s cubic-bezier(.25,.8,.25,1);
+}
+
+/* reveal */
+.photo.reveal img{
+    filter:blur(0);
+    transform:scale(1);
+}
+
+/* PHONE SHAKE STYLE */
+.photo.reveal{
+    animation:phoneShake 0.9s ease;
+}
+@keyframes phoneShake{
+    0%{transform:rotate(0deg);}
+    20%{transform:rotate(-2deg);}
+    40%{transform:rotate(2deg);}
+    60%{transform:rotate(-1.5deg);}
+    80%{transform:rotate(1.5deg);}
+    100%{transform:rotate(0deg);}
+}
+
+/* HEART POP */
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    font-size:18px;
+    pointer-events:none;
+    animation:heartPop 0.8s ease forwards;
+}
+@keyframes heartPop{
+    0%{opacity:1; transform:translateY(0) scale(1);}
+    100%{opacity:0; transform:translateY(-40px) scale(1.8);}
 }
 </style>
 </head>
 
-<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
+<body>
 
-<!-- MUSIC -->
-<audio id="bgMusic" loop>
-  <source src="Dev.mp3">
-</audio>
-
-<!-- FLOATING HEARTS -->
-<div id="hearts"></div>
-
-<!-- SLIDE 1 : INTRO -->
-<div id="slide1" class="slide active items-center justify-center flex-col text-center px-6">
-  <h1 class="text-4xl font-bold text-pink-600 mb-4">For Amna 💕</h1>
-  <div onclick="goToPhotos()" class="bg-white/60 backdrop-blur-xl p-10 rounded-3xl shadow-xl cursor-pointer">
-    <p class="text-lg font-semibold">Tap to unlock memories 💖</p>
-  </div>
+<!-- SLIDE 1 -->
+<div class="slide" id="s1">
+    <div class="card">
+        <h2>Hey Amna ❤️</h2>
+        <p style="margin-top:8px;">I made something special for you</p>
+        <div class="btn-row">
+            <button class="next" onclick="go(2)">Next</button>
+        </div>
+    </div>
 </div>
 
-<!-- SLIDE 2 : PHOTOS -->
-<div id="slide2" class="slide items-center justify-center flex-col px-4">
-  <p class="mb-4 text-gray-600">Swipe → and tap photos</p>
-  <div class="slider">
-    <div class="photo"><img src="pic1.jpg"></div>
-    <div class="photo"><img src="pic2.jpg"></div>
-    <div class="photo"><img src="pic3.jpg"></div>
-    <div class="photo"><img src="pic4.jpg"></div>
-  </div>
+<!-- SLIDE 2 -->
+<div class="slide hidden" id="s2">
+    <div class="card">
+        <h2>A Small Journey 💌</h2>
+        <p style="margin-top:8px;">Just swipe and feel it</p>
+        <div class="btn-row">
+            <button class="back" onclick="go(1)">Back</button>
+            <button class="next" onclick="go(3)">Next</button>
+        </div>
+    </div>
 </div>
 
-<!-- NEXT -->
-<button class="next-btn" onclick="location.href='cake.html'">Next ➡️</button>
+<!-- SLIDE 3 PHOTOS -->
+<div class="slide hidden" id="s3">
+    <div class="card">
+        <h3>Touch & Shake 🫶</h3>
+        <p style="font-size:13px;margin:6px 0 12px;">Swipe → then tap photo</p>
+
+        <div class="photo-track">
+            <div class="photo" onclick="reveal(this,event)">
+                <img src="img1.jpg">
+            </div>
+            <div class="photo" onclick="reveal(this,event)">
+                <img src="img2.jpg">
+            </div>
+            <div class="photo" onclick="reveal(this,event)">
+                <img src="img3.jpg">
+            </div>
+            <div class="photo" onclick="reveal(this,event)">
+                <img src="img4.jpg">
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="back" onclick="go(2)">Back</button>
+            <button class="next" onclick="go(4)">Next</button>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide hidden" id="s4">
+    <div class="card">
+        <h2>Always You ❤️</h2>
+        <p style="margin-top:10px;">— Yours</p>
+        <div class="btn-row">
+            <button class="back" onclick="go(3)">Back</button>
+        </div>
+    </div>
+</div>
 
 <script>
-/* SLIDE SWITCH */
-function goToPhotos(){
-  document.getElementById('slide1').classList.remove('active');
-  document.getElementById('slide2').classList.add('active');
-  bgMusic.play().catch(()=>{});
+function go(n){
+    document.querySelectorAll('.slide').forEach(s=>s.classList.add('hidden'));
+    document.getElementById('s'+n).classList.remove('hidden');
 }
 
-/* FLOATING HEARTS */
-setInterval(()=>{
-  const h=document.createElement('div');
-  h.className='heart';
-  h.style.left=Math.random()*100+'%';
-  h.style.animationDuration=6+Math.random()*4+'s';
-  document.getElementById('hearts').appendChild(h);
-  setTimeout(()=>h.remove(),10000);
-},700);
+function reveal(el,e){
+    if(!el.classList.contains('reveal')){
+        el.classList.add('reveal');
+    }
 
-/* TAP HEARTS */
-document.addEventListener('click',e=>{
-  if(e.target.tagName==='BUTTON') return;
-  const h=document.createElement('div');
-  h.className='tap-heart';
-  h.style.left=e.clientX+'px';
-  h.style.top=e.clientY+'px';
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),800);
-});
+    // heart popup
+    const heart=document.createElement('div');
+    heart.className='heart';
+    heart.innerHTML='❤️';
+    heart.style.left=(e.offsetX)+'px';
+    heart.style.top=(e.offsetY)+'px';
+    el.appendChild(heart);
 
-/* SHAKE REVEAL */
-document.querySelectorAll('.photo img').forEach(img=>{
-  img.addEventListener('click',()=>{
-    img.classList.add('revealed');
-  });
-});
+    setTimeout(()=>heart.remove(),800);
+}
 </script>
 
 </body>
