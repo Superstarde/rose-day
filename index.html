@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Surprise For You ❤️</title>
+<title>A Surprise For Amna ❤️</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
@@ -30,9 +30,9 @@ body{
 
 /* CARD */
 .card{
-    background:rgba(255,255,255,.95);
-    border-radius:24px;
-    box-shadow:0 20px 50px rgba(0,0,0,.25);
+    background:rgba(255,255,255,.96);
+    border-radius:26px;
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
     padding:2rem;
     width:92%;
     max-width:420px;
@@ -46,45 +46,60 @@ body{
 .heart{
     position:absolute;
     font-size:18px;
-    animation:float 7s linear infinite;
+    animation:float 7s ease-in-out infinite;
     opacity:.6;
 }
 @keyframes float{
-    0%{transform:translateY(0);opacity:0}
-    10%{opacity:.6}
-    100%{transform:translateY(-700px);opacity:0}
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
+    100%{transform:translateY(0)}
 }
 
 /* PHOTO GRID */
 .grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:12px;
+    gap:14px;
 }
 
-/* SURPRISE PHOTOS */
+/* MEMORY PHOTO (GLASS REVEAL STYLE) */
 .photo{
     width:100%;
-    border-radius:16px;
-    border:3px solid #f9c2d1;
-    filter:blur(10px);
-    opacity:.7;
-    transform:scale(.9);
-    transition:.6s ease;
+    border-radius:18px;
+    border:3px solid rgba(255,192,203,.6);
+    backdrop-filter: blur(8px);
+    filter: blur(12px);
+    opacity:.5;
+    transform:scale(.92);
+    transition:all .9s cubic-bezier(.4,0,.2,1);
     cursor:pointer;
+    animation:softFloat 5s ease-in-out infinite;
 }
+
+@keyframes softFloat{
+    0%{transform:scale(.92) translateY(0)}
+    50%{transform:scale(.94) translateY(-6px)}
+    100%{transform:scale(.92) translateY(0)}
+}
+
+/* REVEALED MEMORY */
 .photo.reveal{
     filter:blur(0);
     opacity:1;
     transform:scale(1);
-    animation:shake .4s ease;
+    box-shadow:
+        0 0 25px rgba(255,105,180,.45),
+        0 0 50px rgba(255,182,193,.35);
+    animation:glowPulse 3s ease-in-out infinite;
 }
-@keyframes shake{
-    0%{transform:translateX(0)}
-    25%{transform:translateX(-6px)}
-    50%{transform:translateX(6px)}
-    75%{transform:translateX(-4px)}
-    100%{transform:translateX(0)}
+
+@keyframes glowPulse{
+    0%,100%{
+        box-shadow:0 0 25px rgba(255,105,180,.35)
+    }
+    50%{
+        box-shadow:0 0 45px rgba(255,105,180,.55)
+    }
 }
 
 /* LETTER SCROLL */
@@ -92,14 +107,14 @@ body{
     height:0;
     overflow:hidden;
     background:#fff0f5;
-    border-radius:14px;
+    border-radius:16px;
     transition:height 2s ease;
 }
-.scroll.open{height:340px}
+.scroll.open{height:360px}
 .scroll p{
-    padding:22px;
+    padding:24px;
     font-family:'Dancing Script',cursive;
-    font-size:1.4rem;
+    font-size:1.45rem;
     line-height:1.8;
     color:#5c2d4a;
 }
@@ -112,8 +127,8 @@ body{
 
 /* MOBILE */
 @media(max-width:480px){
-    .scroll.open{height:300px}
-    .scroll p{font-size:1.2rem}
+    .scroll.open{height:310px}
+    .scroll p{font-size:1.25rem}
 }
 </style>
 </head>
@@ -125,29 +140,36 @@ body{
 </audio>
 
 <script>
-for(let i=0;i<25;i++){
+/* Background hearts */
+for(let i=0;i<24;i++){
     let h=document.createElement('div');
     h.className='heart';
-    h.innerText=Math.random()>.5?'💖':'💋';
+    h.innerText='❤️';
     h.style.left=Math.random()*100+'%';
+    h.style.bottom=Math.random()*100+'%';
     h.style.animationDuration=5+Math.random()*6+'s';
-    h.style.bottom='-40px';
     document.body.appendChild(h);
 }
 </script>
 
 <!-- SLIDE 1 -->
 <div id="s1" class="card">
-<h1 class="font-hand text-5xl text-rose-600 mb-4">Hey Love ❤️</h1>
-<p class="text-gray-700 mb-6">I made something just for you…</p>
-<button onclick="go(2)" class="bg-rose-500 text-white px-8 py-3 rounded-full font-bold shadow-lg">Open 💌</button>
+<h1 class="font-hand text-5xl text-rose-600 mb-4">Hey Amna ❤️</h1>
+<p class="text-gray-700 mb-6">
+This little surprise is made only for you…
+</p>
+<button onclick="go(2)" class="bg-rose-500 text-white px-8 py-3 rounded-full font-bold shadow-lg">
+Open ❤️
+</button>
 </div>
 
 <!-- SLIDE 2 -->
 <div id="s2" class="card hidden">
-<h1 class="font-hand text-4xl text-rose-600 mb-4">A Rose For You 🌹</h1>
+<h1 class="font-hand text-4xl text-rose-600 mb-4">A Rose For You, Amna 🌹</h1>
 <video src="rose.mp4" autoplay loop muted playsinline class="rounded-xl mb-4 h-44 w-full object-cover"></video>
-<p class="text-gray-600 mb-6">You make my world soft, warm, and beautiful.</p>
+<p class="text-gray-600 mb-6">
+Just like this rose, you bring softness and calm into my life.
+</p>
 <div class="flex gap-4">
 <button onclick="go(1)" class="flex-1 border border-rose-500 text-rose-500 rounded-full py-2">Back</button>
 <button onclick="go(3)" class="flex-1 bg-rose-500 text-white rounded-full py-2">Next ➡️</button>
@@ -156,8 +178,8 @@ for(let i=0;i<25;i++){
 
 <!-- SLIDE 3 -->
 <div id="s3" class="card hidden">
-<h1 class="font-hand text-4xl text-rose-600 mb-2">Our Memories 💖</h1>
-<p class="text-sm text-gray-500 mb-4">(Tap each photo…)</p>
+<h1 class="font-hand text-4xl text-rose-600 mb-2">Our Memories, Amna ❤️</h1>
+<p class="text-sm text-gray-500 mb-4">(Touch gently…)</p>
 <div class="grid mb-6">
 <img src="img1.jpg" class="photo" onclick="reveal(this)">
 <img src="img2.jpg" class="photo" onclick="reveal(this)">
@@ -166,23 +188,33 @@ for(let i=0;i<25;i++){
 </div>
 <div class="flex gap-4">
 <button onclick="go(2)" class="flex-1 border border-rose-500 text-rose-500 rounded-full py-2">Back</button>
-<button onclick="go(4)" class="flex-1 bg-rose-500 text-white rounded-full py-2">Next 💌</button>
+<button onclick="go(4)" class="flex-1 bg-rose-500 text-white rounded-full py-2">Next ❤️</button>
 </div>
 </div>
 
 <!-- SLIDE 4 -->
 <div id="s4" class="card hidden">
-<h1 class="font-hand text-4xl text-rose-600 mb-4">Happy Rose Day 🌹</h1>
+<h1 class="font-hand text-4xl text-rose-600 mb-4">
+Happy Rose Day, Amna 🌹
+</h1>
 <div class="roll"></div>
 <div id="letter" class="scroll">
 <p>
-My Dearest Love,<br><br>
-You are not just a part of my life — you are the feeling that makes life beautiful.
-Every smile of yours melts me, every touch stays with me, and every kiss feels like home.<br><br>
-With you, even ordinary moments turn magical.  
-With you, love feels easy, safe, and endlessly warm.<br><br>
-I promise to cherish you, adore you, and love you more with every heartbeat.
-Today. Tomorrow. Always. ❤️💖💋<br><br>
+My Dearest Amna,<br><br>
+
+You are not just someone I love —  
+you are the peace my heart looks for.<br><br>
+
+Your presence softens my thoughts,  
+your smile lights quiet corners of my soul,  
+and every memory with you feels like something sacred.<br><br>
+
+With you, love feels calm, warm, and real.  
+And with every passing day, I choose you again.<br><br>
+
+Always, truly, and endlessly —  
+my heart belongs to you ❤️<br><br>
+
 Forever yours.
 </p>
 </div>
@@ -192,6 +224,7 @@ Forever yours.
 
 <script>
 const music=document.getElementById('music');
+
 function go(n){
     if(n===2) music.play().catch(()=>{});
     [1,2,3,4].forEach(i=>document.getElementById('s'+i).classList.add('hidden'));
@@ -199,19 +232,22 @@ function go(n){
     if(n===4) setTimeout(()=>document.getElementById('letter').classList.add('open'),150);
     else document.getElementById('letter').classList.remove('open');
 }
+
 function reveal(el){
     if(el.classList.contains('reveal')) return;
     el.classList.add('reveal');
-    for(let i=0;i<12;i++){
+
+    // soft heart burst
+    for(let i=0;i<10;i++){
         let p=document.createElement('div');
         p.className='heart';
-        p.innerText=Math.random()>.5?'💖':'💋';
+        p.innerText='❤️';
         let r=el.getBoundingClientRect();
         p.style.left=r.left+r.width/2+'px';
         p.style.bottom='0';
-        p.style.animationDuration='3s';
+        p.style.animationDuration='4s';
         document.body.appendChild(p);
-        setTimeout(()=>p.remove(),3000);
+        setTimeout(()=>p.remove(),4000);
     }
 }
 </script>
