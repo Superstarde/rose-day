@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For My Valentine ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -12,12 +12,35 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: #000;
-            overflow-x: hidden;
+            overflow: hidden; 
             color: #fce7f3;
             margin: 0;
+            height: 100vh;
         }
         .font-dancing { font-family: 'Dancing Script', cursive; }
         .font-playfair { font-family: 'Playfair Display', serif; }
+
+        /* --- Unified Button Style (Applied to all) --- */
+        .btn-primary {
+            background: linear-gradient(to right, #db2777, #e11d48); /* Pink-600 to Rose-600 */
+            color: white;
+            font-weight: bold;
+            border-radius: 9999px; /* Full pill shape */
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            border: 2px solid #f472b6; /* Pink-400 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            z-index: 50;
+            display: inline-block;
+        }
+        .btn-primary:active { transform: scale(0.95); }
+        .btn-primary:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
+        }
 
         /* --- Screens / Sections --- */
         .section {
@@ -33,6 +56,7 @@
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
             z-index: 10;
+            overflow: hidden;
         }
         .section.active {
             display: flex;
@@ -49,52 +73,40 @@
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 55vh;
+            height: 45vh; /* Keep height contained */
             display: flex;
             justify-content: center;
             align-items: center;
             perspective: 1000px;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
         
-        /* The Pink Glow - Applied to ALL photos now */
         .carousel-item {
             position: absolute;
-            width: 300px;
-            height: 450px;
-            border-radius: 20px;
+            width: 65vw; 
+            max-width: 280px;
+            height: 40vh; /* Responsive height */
+            max-height: 420px;
+            border-radius: 15px;
             background: #fff;
             overflow: hidden;
             cursor: pointer;
-            
-            /* PINK GLOW EFFECT */
-            border: 4px solid #ec4899; 
-            box-shadow: 0 0 20px #ec4899, 0 0 40px #be185d;
-            animation: pulsePink 3s infinite alternate;
-        }
-
-        @keyframes pulsePink {
-            from { box-shadow: 0 0 15px #ec4899; }
-            to { box-shadow: 0 0 35px #ec4899, 0 0 10px white; }
+            border: 3px solid #ec4899; 
+            box-shadow: 0 0 15px #ec4899;
         }
 
         .carousel-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block; /* Fixes tiny gaps */
-        }
-
-        /* Mobile sizing */
-        @media (max-width: 768px) {
-            .carousel-item { width: 260px; height: 380px; }
+            display: block;
         }
 
         /* --- Falling Petals --- */
         .petal {
             position: fixed;
             top: -10vh;
-            font-size: 2rem;
+            font-size: 1.5rem;
             pointer-events: none;
             z-index: 50;
             animation: fall linear forwards;
@@ -103,36 +115,88 @@
             to { transform: translateY(110vh) rotate(720deg); }
         }
 
-        /* --- Letter Paper --- */
-        .paper {
-            background: #fffdf7;
-            padding: 30px;
-            max-width: 600px;
-            width: 90%;
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        /* --- ENVELOPE STYLES --- */
+        .envelope-wrapper {
             position: relative;
-            max-height: 70vh;
-            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            perspective: 1000px;
         }
-        
-        /* Navigation Buttons */
-        .nav-btn {
-            background: #ec4899;
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
-            transition: transform 0.2s, background 0.2s;
+
+        .envelope {
+            width: 85vw;
+            max-width: 320px;
+            height: 200px;
+            background: #be123c;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
             z-index: 20;
         }
-        .nav-btn:hover { 
-            transform: scale(1.1); 
-            background: #db2777; 
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 42.5vw solid transparent;
+            border-right: 42.5vw solid transparent;
+            border-top: 130px solid #e11d48;
+            transform-origin: top;
+            z-index: 6;
+        }
+        @media(min-width: 380px) {
+            .envelope-flap { border-left: 160px solid transparent; border-right: 160px solid transparent; }
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 42.5vw solid transparent;
+            border-right: 42.5vw solid transparent;
+            border-bottom: 140px solid #fb7185;
+            z-index: 5;
+        }
+        @media(min-width: 380px) {
+            .envelope-pocket { border-left: 160px solid transparent; border-right: 160px solid transparent; }
+        }
+
+        /* The Paper/Letter */
+        .letter-content {
+            position: absolute;
+            bottom: 10px;
+            width: 92%; /* Wider to fit text */
+            max-width: 500px;
+            background: #fffdf7;
+            padding: 15px; /* Less padding to fit text */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3;
+            transform: scale(0.8);
+            opacity: 0;
+            overflow-y: auto; 
+            border-radius: 5px;
+            scrollbar-width: none; 
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            background: rgba(236, 72, 153, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 30;
         }
     </style>
 </head>
@@ -145,43 +209,43 @@
     <div id="hearts-container" class="fixed inset-0 pointer-events-none z-0"></div>
 
     <div id="screen-1" class="section active bg-intro">
-        <h1 class="text-6xl md:text-8xl font-dancing text-pink-500 mb-6 drop-shadow-lg text-center px-4">
+        <h1 class="text-5xl md:text-8xl font-dancing text-pink-500 mb-6 drop-shadow-lg text-center px-4">
             For Amna...
         </h1>
-        <p class="text-pink-200 text-xl mb-10 font-light tracking-wide">I have a surprise for you</p>
+        <p class="text-pink-200 text-lg mb-10 font-light tracking-wide">I have a surprise for you</p>
         
-        <button onclick="startJourney()" class="px-10 py-4 bg-gradient-to-r from-pink-600 to-rose-600 rounded-full text-white font-bold text-xl shadow-lg hover:scale-105 transition-transform duration-300 border-2 border-pink-400">
+        <button onclick="startJourney()" class="btn-primary">
             Tap to Open ❤️
         </button>
     </div>
 
     <div id="screen-2" class="section bg-wish text-center px-4">
-        <h1 class="text-5xl md:text-7xl font-dancing font-bold text-pink-700 mb-4 scale-0" id="wish-title">
-            Happy Valentine's Day<br>Baby! 🌹
+        <h1 class="text-5xl md:text-7xl font-dancing font-bold text-pink-700 mb-4 scale-0 leading-tight" id="wish-title">
+            Happy<br>Valentine's<br>Day! 🌹
         </h1>
-        <p class="text-xl text-rose-800 mt-4 opacity-0" id="wish-sub">
+        <p class="text-lg text-rose-800 mt-2 opacity-0" id="wish-sub">
             You make my life beautiful.
         </p>
-        <button onclick="nextSection(3)" class="mt-12 px-8 py-3 bg-white text-pink-600 rounded-full font-bold shadow-xl hover:bg-rose-50 transition opacity-0" id="wish-btn">
+        <button onclick="nextSection(3)" class="btn-primary mt-10 opacity-0" id="wish-btn">
             See Our Memories ➡️
         </button>
     </div>
 
-    <div id="screen-3" class="section bg-photos relative">
-        <h2 class="text-4xl font-dancing text-pink-300 mb-4 z-20 mt-8 md:mt-0">Our Moments</h2>
+    <div id="screen-3" class="section bg-photos flex flex-col items-center justify-center">
+        
+        <h2 class="text-3xl md:text-4xl font-dancing text-pink-300 mb-4">Our Moments</h2>
 
         <div class="carousel-container">
-            <button class="nav-btn absolute left-4 md:left-10" onclick="moveSlide(-1)">❮</button>
-            <div id="track" class="w-full h-full flex justify-center items-center relative">
-                </div>
-            <button class="nav-btn absolute right-4 md:right-10" onclick="moveSlide(1)">❯</button>
+            <button class="nav-btn absolute left-2 md:left-10" onclick="moveSlide(-1)">❮</button>
+            <div id="track" class="w-full h-full flex justify-center items-center relative"></div>
+            <button class="nav-btn absolute right-2 md:right-10" onclick="moveSlide(1)">❯</button>
         </div>
 
-        <div class="h-20 flex items-center justify-center px-4 text-center z-20 mt-8 mb-2">
-            <p id="caption" class="text-xl md:text-2xl font-playfair text-pink-200 italic transition-opacity duration-300"></p>
+        <div class="h-16 flex items-center justify-center px-4 text-center mb-2 w-full">
+            <p id="caption" class="text-lg md:text-xl font-playfair text-pink-200 italic transition-opacity duration-300"></p>
         </div>
 
-        <button onclick="nextSection(4)" class="mt-4 px-6 py-2 border border-pink-400 text-pink-300 rounded-full hover:bg-pink-900/30 transition z-20 text-sm">
+        <button onclick="nextSection(4)" class="btn-primary mt-2 text-sm px-6 py-2">
             One Last Thing... ↓
         </button>
     </div>
@@ -189,66 +253,71 @@
     <div id="screen-4" class="section bg-letter">
         <div id="petals-container"></div>
 
-        <div class="paper relative transform rotate-1">
-            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-pink-200/50 rotate-2"></div>
-            
-            <h2 class="text-4xl font-dancing text-center text-rose-600 mb-6">My Dearest Amna,</h2>
-            
-            <div class="space-y-4 text-gray-700 font-playfair leading-relaxed text-lg">
-                <p>Happy Valentine's Day, my love! ❤️</p>
-                <p>
-                    I wanted to take a moment to tell you how much you mean to me. You are not just my girlfriend, you are my best friend, my safe place, and my greatest happiness.
-                </p>
-                <p>
-                    Every notification from you makes me smile. Every picture of us reminds me of how lucky I am. Distance implies so little when someone means so much.
-                </p>
-                <p>
-                    Thank you for being you.
-                </p>
-                <p class="text-right font-bold text-pink-600 mt-8 pt-4 border-t border-pink-100">
-                    Forever Yours,<br>
-                    <span class="text-3xl font-dancing">Dev</span>
-                </p>
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                
+                <div class="envelope-flap" id="flap"></div>
+                <div class="envelope-pocket" id="pocket"></div>
+
+                <div class="letter-content" id="letter">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-pink-200/40 -rotate-1"></div>
+                    
+                    <h2 class="text-2xl font-dancing text-center text-rose-600 mb-2 mt-2">Meri Shayaari, Meri Amna...</h2>
+                    
+                    <div class="space-y-3 text-gray-800 font-playfair leading-snug text-sm text-justify">
+                        <p class="text-center italic text-rose-500 font-semibold text-sm">
+                            "Log kehte hain mohabbat ek baar hoti hai,<br>
+                            Par main jab jab aapko dekhta hoon, mujhe har baar hoti hai."
+                        </p>
+
+                        <p>
+                            Amna, log Valentine's Day par tohfe dete hain, par main aapko apna aane wala har lamha dena chahta hoon. Aap mere liye sirf ek rishta nahi ho, aap sukoon ka wo thikana ho. 
+                        </p>
+
+                        <p>
+                            Jab hum saath hote hain, waqt jaise thamm sa jata hai. Main chahta hoon ki humari ye kahani sirf aaj ke din tak na rahe—main ise har subah aapki chai ki chuski mein likhna chahta hoon.
+                        </p>
+
+                        <p>
+                            Aapki ek muskurahat mere pure din ki kamai hai. Vaada hai mera, duniya ki bheed mein kabhi aapka haath nahi chodunga.
+                        </p>
+
+                        <div class="pt-2 text-center">
+                            <p class="text-lg font-dancing text-rose-600 font-bold">
+                                Happy Valentine's Day! 👑
+                            </p>
+                        </div>
+                        
+                        <div class="mt-4 pt-2 border-t border-dashed border-rose-200">
+                            <p class="text-right font-bold text-rose-600">
+                                <span class="text-xl font-dancing">Dev</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <button onclick="location.reload()" class="fixed top-5 right-5 text-pink-300 hover:text-white text-xs">
-            Replay ↻
+        <button onclick="location.reload()" class="btn-primary fixed top-5 right-5 text-xs px-4 py-2" style="padding: 8px 16px; font-size: 12px;">
+            Restart ↻
         </button>
     </div>
 
     <script>
-        // --- CONFIGURATION ---
-        
-        // Ensure these filenames match your uploads EXACTLY.
-        // I removed the "mystery" setting. All photos will show normally.
         const slides = [
-            { 
-                img: "pic4.png", 
-                caption: "You are my favorite notification 📱❤️" 
-            },
-            { 
-                img: "pic5.png", // Formerly mystery, now normal
-                caption: "You are full of surprises! 🎁" 
-            },
-            { 
-                img: "pic2.jpg", 
-                caption: "Your smile is my daily motivation ✨" 
-            },
-            { 
-                img: "pic3.jpg", 
-                caption: "Our most precious memory together 🌟"
-            },
-            { 
-                img: "pic1.png", 
-                caption: "I love you more than words can say 💖" 
-            }
+            { img: "pic1.png", caption: "I love you more than words can say 💖" },
+            { img: "pic2.jpg", caption: "You are full of surprises! 🎁" },
+            { img: "pic3.jpg", caption: "Your smile is my daily motivation ✨" },
+            { img: "pic4.png", caption: "Our most precious memory together 🌟" },
+            { img: "pic5.png", caption: "You are my favorite notification 📱❤️" },
+            { img: "pic6.jpg", caption: "Every moment with you is a treasure 💎" },
+            { img: "pic7.png", caption: "My heart is wherever you are 🏠❤️" },
+            { img: "pic8.jpg", caption: "To many more years of us! 🥂" }
         ];
 
         let currentSlide = 0;
         const bgMusic = document.getElementById('bgMusic');
 
-        // --- SECTION 1 ---
         function startJourney() {
             bgMusic.play().catch(e => console.log("Audio interaction needed"));
             nextSection(2);
@@ -259,47 +328,36 @@
             }, 500);
         }
 
-        // --- NAVIGATION ---
         function nextSection(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const next = document.getElementById(`screen-${id}`);
             next.classList.add('active');
+            
             if(id === 3) renderCarousel();
-            if(id === 4) startRoseRain();
+            if(id === 4) startLetterAnimation();
         }
 
-        // --- CAROUSEL ---
         function renderCarousel() {
             const track = document.getElementById('track');
             track.innerHTML = '';
-
             slides.forEach((slide, index) => {
                 const el = document.createElement('div');
                 el.className = 'carousel-item';
-                // Note: .carousel-item now has the PINK GLOW in CSS by default for EVERYONE.
-
+                
                 const img = document.createElement('img');
                 img.src = slide.img;
-                
-                // --- ERROR HANDLING FOR MISSING PHOTOS ---
                 img.onerror = function() {
-                    console.log(`Failed to load: ${slide.img}`);
-                    // Replace broken image with a placeholder box so you know it's missing
                     this.style.display = 'none';
                     const errDiv = document.createElement('div');
-                    errDiv.style.width = '100%';
-                    errDiv.style.height = '100%';
-                    errDiv.style.backgroundColor = '#fce7f3';
-                    errDiv.style.color = '#db2777';
-                    errDiv.style.display = 'flex';
-                    errDiv.style.alignItems = 'center';
-                    errDiv.style.justifyContent = 'center';
-                    errDiv.style.textAlign = 'center';
-                    errDiv.style.padding = '20px';
-                    errDiv.innerHTML = `<strong>Image Not Found!</strong><br><br>Check filename:<br>${slide.img}`;
+                    Object.assign(errDiv.style, {
+                        width: '100%', height: '100%',
+                        backgroundColor: '#fce7f3', color: '#db2777',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        textAlign: 'center', padding: '10px', fontSize: '12px'
+                    });
+                    errDiv.innerHTML = `<strong>Photo?</strong><br>${slide.img}`;
                     el.appendChild(errDiv);
                 };
-
                 el.onclick = () => moveSlide(index - currentSlide);
                 el.appendChild(img);
                 track.appendChild(el);
@@ -319,33 +377,23 @@
 
             items.forEach((item, index) => {
                 const offset = index - currentSlide;
-                let zIndex = 0;
-                let transform = '';
-                let opacity = 0;
-                let pointerEvents = 'none';
-
+                let zIndex = 0, transform = '', opacity = 0, pointerEvents = 'none';
+                
                 let visualOffset = offset;
                 if(offset > slides.length/2) visualOffset -= slides.length;
                 if(offset < -slides.length/2) visualOffset += slides.length;
 
                 if (visualOffset === 0) {
-                    // CENTER
                     transform = 'translateX(0) scale(1)';
-                    zIndex = 10;
-                    opacity = 1;
-                    pointerEvents = 'auto';
+                    zIndex = 10; opacity = 1; pointerEvents = 'auto';
                 } else if (Math.abs(visualOffset) === 1) {
-                    // SIDES
-                    transform = `translateX(${visualOffset * 220}px) scale(0.8) rotateY(${visualOffset * -15}deg)`;
-                    zIndex = 5;
-                    opacity = 0.6;
-                    pointerEvents = 'auto'; 
+                    const xOffset = visualOffset * (window.innerWidth < 600 ? 150 : 220); 
+                    transform = `translateX(${xOffset}px) scale(0.8) rotateY(${visualOffset * -15}deg)`;
+                    zIndex = 5; opacity = 0.6; pointerEvents = 'auto'; 
                 } else {
-                    // HIDDEN
                     transform = `translateX(${visualOffset * 100}px) scale(0)`;
                     opacity = 0;
                 }
-
                 item.style.transform = transform;
                 item.style.zIndex = zIndex;
                 item.style.opacity = opacity;
@@ -358,36 +406,70 @@
             }, 300);
         }
 
-        // --- RAIN ---
-        function startRoseRain() {
+        function startLetterAnimation() {
             const container = document.getElementById('petals-container');
             const roseTypes = ['🌹', '🌺', '🥀', '🌸']; 
+            
             const createPetal = () => {
                 const el = document.createElement('div');
                 el.className = 'petal';
                 el.textContent = roseTypes[Math.floor(Math.random() * roseTypes.length)];
                 el.style.left = Math.random() * 100 + 'vw';
                 el.style.animationDuration = Math.random() * 3 + 4 + 's';
-                el.style.fontSize = Math.random() * 20 + 20 + 'px';
+                el.style.fontSize = Math.random() * 15 + 15 + 'px';
                 container.appendChild(el);
                 setTimeout(() => el.remove(), 7000);
             };
             const interval = setInterval(createPetal, 300);
-            setTimeout(() => clearInterval(interval), 15000);
+            setTimeout(() => clearInterval(interval), 20000);
+
+            const tl = gsap.timeline({ delay: 0.5 });
+
+            tl.to("#flap", { 
+                rotateX: 180, 
+                duration: 1, 
+                ease: "power2.inOut" 
+            })
+            .to("#letter", { 
+                y: -120, 
+                opacity: 1,
+                zIndex: 4, 
+                duration: 1,
+                ease: "back.out(1.2)"
+            })
+            // Maximizing height to 85vh and scale to 1 to fit text comfortably
+            .to("#letter", {
+                zIndex: 50,
+                y: 0,
+                scale: 1,
+                height: "85vh", 
+                width: "92vw",
+                maxWidth: "600px",
+                duration: 1.5,
+                ease: "power3.out"
+            }, "+=0.2")
+            .to(["#flap", "#pocket"], {
+                opacity: 0,
+                duration: 0.5
+            }, "-=1.0")
+            .to("#envelope", {
+                backgroundColor: "rgba(190, 18, 60, 0)",
+                boxShadow: "0 0 0 rgba(0,0,0,0)",
+                duration: 0.5
+            }, "<");
         }
 
-        // --- HEARTS ---
         function initHearts() {
             const container = document.getElementById('hearts-container');
             setInterval(() => {
                 const h = document.createElement('div');
                 h.textContent = '❤️';
-                h.style.position = 'absolute';
-                h.style.left = Math.random() * 100 + '%';
-                h.style.top = '100%';
-                h.style.opacity = 0.3;
-                h.style.fontSize = Math.random() * 20 + 10 + 'px';
-                h.style.transition = 'all 8s linear';
+                Object.assign(h.style, {
+                    position: 'absolute', left: Math.random() * 100 + '%',
+                    top: '100%', opacity: 0.3,
+                    fontSize: Math.random() * 20 + 10 + 'px',
+                    transition: 'all 8s linear'
+                });
                 container.appendChild(h);
                 setTimeout(() => {
                     h.style.top = '-10%';
